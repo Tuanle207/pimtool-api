@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIMTool", "src\PIMTool\PIMTool.csproj", "{9BBBD9A1-D23C-45D3-A749-03486115B0D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{531DF6F1-24BF-4D75-B63C-35B479B35CBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1F97EDCD-959E-4A14-90B8-AEBC42A42E05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIMTool.Services", "src\PIMTool.Services\PIMTool.Services.csproj", "{4AA71FB6-F443-4BEB-8BBB-511F71277813}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIMTool.Db", "src\PIMTool.Db\PIMTool.Db.csproj", "{63991D01-151E-470F-8F68-9DB27F39D4C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIMTool.Shared", "src\PIMTool.Shared\PIMTool.Shared.csproj", "{4A0A6D7A-6ACD-42FA-A3F7-329047CFFE93}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BBBD9A1-D23C-45D3-A749-03486115B0D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BBBD9A1-D23C-45D3-A749-03486115B0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BBBD9A1-D23C-45D3-A749-03486115B0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BBBD9A1-D23C-45D3-A749-03486115B0D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AA71FB6-F443-4BEB-8BBB-511F71277813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AA71FB6-F443-4BEB-8BBB-511F71277813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AA71FB6-F443-4BEB-8BBB-511F71277813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AA71FB6-F443-4BEB-8BBB-511F71277813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63991D01-151E-470F-8F68-9DB27F39D4C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63991D01-151E-470F-8F68-9DB27F39D4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63991D01-151E-470F-8F68-9DB27F39D4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63991D01-151E-470F-8F68-9DB27F39D4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A0A6D7A-6ACD-42FA-A3F7-329047CFFE93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A0A6D7A-6ACD-42FA-A3F7-329047CFFE93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A0A6D7A-6ACD-42FA-A3F7-329047CFFE93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A0A6D7A-6ACD-42FA-A3F7-329047CFFE93}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9BBBD9A1-D23C-45D3-A749-03486115B0D0} = {531DF6F1-24BF-4D75-B63C-35B479B35CBC}
+		{4AA71FB6-F443-4BEB-8BBB-511F71277813} = {531DF6F1-24BF-4D75-B63C-35B479B35CBC}
+		{63991D01-151E-470F-8F68-9DB27F39D4C3} = {531DF6F1-24BF-4D75-B63C-35B479B35CBC}
+		{4A0A6D7A-6ACD-42FA-A3F7-329047CFFE93} = {531DF6F1-24BF-4D75-B63C-35B479B35CBC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {071E6251-9F25-416A-8150-BB50B7E7A601}
+	EndGlobalSection
+EndGlobal
