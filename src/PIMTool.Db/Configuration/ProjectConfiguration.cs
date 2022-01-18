@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PIMTool.Services.Common.Entity;
 using PIMTool.Services.Project;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,24 @@ namespace PIMTool.Db.Configuration
 
             builder.HasMany(x => x.Employees)
                 .WithMany(x => x.Projects)
-                .UsingEntity(x => x.ToTable("PROJECT_EMPLOYEE"));
+                .UsingEntity<ProjectEmployeeEntity>(pe => 
+                    pe.HasOne(pe => pe.Employee)
+                        .WithMany(e => e.ProjectEmployees)
+                        .HasForeignKey(pe => pe.EmployeeId)
+                        .OnDelete(DeleteBehavior.ClientCascade),
+                    pe => pe.HasOne(pe => pe.Project)
+                        .WithMany(p => p.ProjectEmployees)
+                        .HasForeignKey(pt => pt.ProjectId)
+                        .OnDelete(DeleteBehavior.Cascade),
+                    pe =>
+                    {
+                        pe.ToTable("PROJECT_EMPLOYEE", DbContants.DbSchema);
+
+                        pe.HasKey(pe => new { pe.ProjectId, pe.EmployeeId });
+                        
+                        pe.Property(pe => pe.JoinDate).HasColumnType("date");
+
+                    });
         }
     }
 }

@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace PIMTool.Services.Project
 {
-    public interface IProjectService : IServiceBase
+    public interface IProjectService : IServiceBase<ProjectEntity>
     {
         Task<ProjectDto> GetProjectByIdAsync(long projectId);
 
         Task<UpdateProjectDto> GetProjectForUpdateAsync(long projectId);
 
-        Task<PaginationModel<ProjectDto>> GetProjectsWithFilterAsync(ProjectFilterReq input);
+        Task<PaginationModel<ProjectDto>> GetProjectsWithFilterAsync(ProjectFilterReq filter);
 
         Task<ProjectDto> UpdateProjectAsync(long projectId, UpdateProjectDto project);
 
-        Task<ProjectDto> CreateProjectAsync(NewProjectDto input);
+        Task<ProjectDto> CreateProjectAsync(NewProjectDto newProject);
 
-        Task DeleteProjectAsync(long projectId, int rowVersion);
+        Task DeleteProjectAsync(long projectId, string rowVersion);
 
-        Task DeleteProjects(Dictionary<long, int> listIdAndRowVersion);
+        Task DeleteProjectsAsync(Dictionary<long, string> listIdAndRowVersion);
 
-        CheckProjectNumberExistenceRes CheckProjectNumberExistence(short projectNumber);
+        Task<CheckProjectNumberExistenceRes> CheckProjectNumberExistenceAsync(short projectNumber);
     }
 }

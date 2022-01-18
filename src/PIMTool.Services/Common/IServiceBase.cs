@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIMTool.Services.Common
 {
-    public interface IServiceBase
+    public interface IServiceBase<TEntity> where TEntity : EntityBase
     {
     }
 }

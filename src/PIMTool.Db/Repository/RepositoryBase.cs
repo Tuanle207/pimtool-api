@@ -132,6 +132,18 @@ namespace PIMTool.Db.Repository
             }
         }
 
+        public async Task<IList<TEntity>> GetByIdAsync(IList<long> listId, bool tracking = false)
+        {
+            IQueryable<TEntity> query = dbSet.AsQueryable();
+            if (tracking)
+            {
+                query = query.AsNoTracking();
+            }
+            IList<TEntity> items = await query.Where(x => listId.Contains(x.Id))
+                .ToListAsync();
+            return items;
+        }
+
         public async Task<int> CountAllAsync()
         {
             int count = await dbSet.CountAsync();
@@ -188,6 +200,24 @@ namespace PIMTool.Db.Repository
             return result;
         }
 
+        public async Task<IList<TResult>> GetByIdAsync<TResult>(IList<long> listId, EntitySelector<TEntity, TResult> selector)
+        {
+            IList<TResult> result = await dbSet.AsNoTracking()
+                .Where(x => listId.Contains(x.Id))
+                .Select(selector.Expression)
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<TResult> FirstOrDefaultAsync<TResult>(IQueryable<TEntity> query, EntitySelector<TEntity, TResult> selector)
+        {
+            TResult result = await query.AsNoTracking()
+                .Select(selector.Expression)
+                .FirstOrDefaultAsync();
+            return result;
+        }
+        
         #endregion
     }
 }

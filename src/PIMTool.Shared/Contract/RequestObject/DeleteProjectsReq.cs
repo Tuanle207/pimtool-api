@@ -8,6 +8,6 @@ namespace PIMTool.Shared.Contract.RequestObject
 {
     public class DeleteProjectsReq
     {
-        public Dictionary<long, int> ListIdAndRowVersion { get; set; }
+        public Dictionary<long, string> ListIdAndRowVersion { get; set; }
     }
 }

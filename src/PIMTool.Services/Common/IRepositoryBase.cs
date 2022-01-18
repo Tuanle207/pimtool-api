@@ -38,6 +38,8 @@ namespace PIMTool.Services.Common
 
         Task<TEntity> GetByIdAsync(long id, bool tracking = false);
 
+        Task<IList<TEntity>> GetByIdAsync(IList<long> listId, bool tracking = false);
+
         Task<IList<TEntity>> GetAllAsync(bool tracking = false);
 
         Task<IList<TEntity>> GetAllAsync(IQueryable<TEntity> query, bool tracking = false);
@@ -54,9 +56,13 @@ namespace PIMTool.Services.Common
 
         Task<TResult> GetByIdAsync<TResult>(long id, EntitySelector<TEntity, TResult> selector);
 
+        Task<IList<TResult>> GetByIdAsync<TResult>(IList<long> listId, EntitySelector<TEntity, TResult> selector);
+
         Task<IList<TResult>> GetAllAsync<TResult>(EntitySelector<TEntity, TResult> selector);
 
         Task<IList<TResult>> GetAllAsync<TResult>(IQueryable<TEntity> query, EntitySelector<TEntity, TResult> selector);
+
+        Task<TResult> FirstOrDefaultAsync<TResult>(IQueryable<TEntity> query, EntitySelector<TEntity, TResult> selector);
 
         #endregion
     }

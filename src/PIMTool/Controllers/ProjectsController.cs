@@ -53,11 +53,11 @@ namespace PIMTool.Controllers
         public async Task<IActionResult> CreateProject([FromBody] NewProjectDto input)
         {
             ProjectDto result = await _projectService.CreateProjectAsync(input);
-            return CreatedAtAction(nameof(GetProject), new { id = result.Id }, result);
+            return CreatedAtAction(nameof(CreateProject), new { result.Id }, result);
         }
 
         [HttpDelete(RouteConstants.Project.DeleteOne)]
-        public async Task<IActionResult> DeleteProject(long projectId, [FromQuery] int rowVersion)
+        public async Task<IActionResult> DeleteProject(long projectId, [FromQuery] string rowVersion)
         {
             await _projectService.DeleteProjectAsync(projectId, rowVersion);
             return NoContent();
@@ -66,14 +66,14 @@ namespace PIMTool.Controllers
         [HttpPut(RouteConstants.Project.DeleteAll)]
         public async Task<IActionResult> DeleteProjects([FromBody] DeleteProjectsReq input)
         {
-            await _projectService.DeleteProjects(input.ListIdAndRowVersion);
+            await _projectService.DeleteProjectsAsync(input.ListIdAndRowVersion);
             return NoContent();
         }
 
         [HttpPost(RouteConstants.Project.CheckProjectNumber)]
-        public IActionResult CheckProjectNumberExistence([FromBody] CheckProjectNumberExistenceReq input)
+        public async Task<IActionResult> CheckProjectNumberExistence([FromBody] CheckProjectNumberExistenceReq input)
         {
-            CheckProjectNumberExistenceRes result = _projectService.CheckProjectNumberExistence(input.Number);
+            CheckProjectNumberExistenceRes result = await _projectService.CheckProjectNumberExistenceAsync(input.Number);
             return Ok(result);
         }
     }

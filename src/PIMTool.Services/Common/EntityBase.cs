@@ -9,6 +9,6 @@ namespace PIMTool.Services.Common
     public class EntityBase
     {
         public long Id { get; set; }
-        public int RowVersion { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 }

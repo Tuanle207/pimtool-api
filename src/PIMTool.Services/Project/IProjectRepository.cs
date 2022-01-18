@@ -9,5 +9,7 @@ namespace PIMTool.Services.Project
 {
     public interface IProjectRepository : IRepositoryBase<ProjectEntity>
     {
+        Task<ProjectEntity> GetByProjectNumber(short projectNumber);
+        Task<ProjectEntity> GetProjectByIdForUpdate(long projectId);
     }
 }

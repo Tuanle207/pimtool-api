@@ -9,6 +9,7 @@ namespace PIMTool.Db
 {
     public class AppDbContext : DbContext
     {
+
         public AppDbContext(DbContextOptions<AppDbContext> contextOptions) : base(contextOptions)
         {
 

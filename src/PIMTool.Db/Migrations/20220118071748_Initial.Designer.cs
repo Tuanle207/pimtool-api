@@ -10,7 +10,7 @@ using PIMTool.Db;
 namespace PIMTool.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220117101544_Initial")]
+    [Migration("20220118071748_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,19 +21,22 @@ namespace PIMTool.Db.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EmployeeEntityProjectEntity", b =>
+            modelBuilder.Entity("PIMTool.Services.Common.Entity.ProjectEmployeeEntity", b =>
                 {
-                    b.Property<long>("EmployeesId")
+                    b.Property<long>("ProjectId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ProjectsId")
+                    b.Property<long>("EmployeeId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("EmployeesId", "ProjectsId");
+                    b.Property<DateTime>("JoinDate")
+                        .HasColumnType("date");
 
-                    b.HasIndex("ProjectsId");
+                    b.HasKey("ProjectId", "EmployeeId");
 
-                    b.ToTable("PROJECT_EMPLOYEE");
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("PROJECT_EMPLOYEE", "pimtool");
                 });
 
             modelBuilder.Entity("PIMTool.Services.Employee.EmployeeEntity", b =>
@@ -56,10 +59,10 @@ namespace PIMTool.Db.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("RowVersion")
+                    b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
+                        .HasColumnType("rowversion");
 
                     b.Property<string>("Visa")
                         .IsRequired()
@@ -81,10 +84,10 @@ namespace PIMTool.Db.Migrations
                     b.Property<long>("LeaderId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("RowVersion")
+                    b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
+                        .HasColumnType("rowversion");
 
                     b.HasKey("Id");
 
@@ -108,10 +111,7 @@ namespace PIMTool.Db.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("date");
 
-                    b.Property<long?>("GroupId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("GroupdId")
+                    b.Property<long>("GroupId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -124,10 +124,10 @@ namespace PIMTool.Db.Migrations
                         .HasColumnType("smallint")
                         .IsFixedLength(true);
 
-                    b.Property<int>("RowVersion")
+                    b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
+                        .HasColumnType("rowversion");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("date");
@@ -145,19 +145,23 @@ namespace PIMTool.Db.Migrations
                     b.ToTable("PROJECT", "pimtool");
                 });
 
-            modelBuilder.Entity("EmployeeEntityProjectEntity", b =>
+            modelBuilder.Entity("PIMTool.Services.Common.Entity.ProjectEmployeeEntity", b =>
                 {
-                    b.HasOne("PIMTool.Services.Employee.EmployeeEntity", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
+                    b.HasOne("PIMTool.Services.Employee.EmployeeEntity", "Employee")
+                        .WithMany("ProjectEmployees")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("PIMTool.Services.Project.ProjectEntity", "Project")
+                        .WithMany("ProjectEmployees")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PIMTool.Services.Project.ProjectEntity", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Employee");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("PIMTool.Services.Group.GroupEntity", b =>
@@ -175,7 +179,9 @@ namespace PIMTool.Db.Migrations
                 {
                     b.HasOne("PIMTool.Services.Group.GroupEntity", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Group");
                 });
@@ -183,6 +189,13 @@ namespace PIMTool.Db.Migrations
             modelBuilder.Entity("PIMTool.Services.Employee.EmployeeEntity", b =>
                 {
                     b.Navigation("LeadingGroups");
+
+                    b.Navigation("ProjectEmployees");
+                });
+
+            modelBuilder.Entity("PIMTool.Services.Project.ProjectEntity", b =>
+                {
+                    b.Navigation("ProjectEmployees");
                 });
 #pragma warning restore 612, 618
         }

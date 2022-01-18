@@ -20,6 +20,9 @@ using PIMTool.Db.Repository;
 using PIMTool.Services.Employee;
 using PIMTool.Services.Group;
 using PIMTool.Shared.Extension;
+using PIMTool.Filter;
+using PIMTool.Shared.Contract.Common;
+using PIMTool.Services.Project.Validation;
 
 namespace PIMTool
 {
@@ -46,6 +49,9 @@ namespace PIMTool
             ConfigureAppServices(services);
 
             ConfigureUnitOfWork(services);
+
+            ConfigureDataValidator(services);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,7 +86,10 @@ namespace PIMTool
 
         private void ConfigureControllers(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<ExceptionFilter>();
+            });
         }
 
         private void ConfigureAutoMapper(IServiceCollection services)
@@ -91,7 +100,9 @@ namespace PIMTool
         private void ConfigureDbContext(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
+                options
+                    .EnableSensitiveDataLogging()
+                    .UseSqlServer(Configuration["ConnectionStrings:Default"]));
         }
 
         private void ConfigureAppServices(IServiceCollection services)
@@ -108,6 +119,11 @@ namespace PIMTool
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        }
+
+        private void ConfigureDataValidator(IServiceCollection services)
+        {
+            services.AddScoped<IValidator<NewProjectDto>, NewProjectValidator>();
         }
     }
 }

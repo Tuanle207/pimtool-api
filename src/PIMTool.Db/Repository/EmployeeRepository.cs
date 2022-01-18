@@ -16,7 +16,7 @@ namespace PIMTool.Db.Repository
 
         public async Task<IList<EmployeeEntity>> GetByListVisa(IList<string> listVisa)
         {
-            IList<EmployeeEntity> items = await dbSet.AsNoTracking()
+            IList<EmployeeEntity> items = await dbSet
                 .Where(x => listVisa.Contains(x.Visa))
                 .ToListAsync();
 

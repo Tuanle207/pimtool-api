@@ -12,7 +12,11 @@ namespace PIMTool.Services.Group
     public class GroupEntity : EntityBase
     {
         public long LeaderId { get; set; }
+        public EmployeeEntity Leader { get; protected set; }
 
-        public EmployeeEntity Leader { get; set; }
+        public virtual void SetLeader(EmployeeEntity employee)
+        {
+            Leader = employee;
+        }
     }
 }

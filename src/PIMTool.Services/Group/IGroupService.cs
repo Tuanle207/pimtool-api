@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PIMTool.Services.Group
 {
-    public interface IGroupService : IServiceBase
+    public interface IGroupService : IServiceBase<GroupEntity>
     {
         Task<PaginationModel<BasicGroupDto>> GetAllGroupsAsync();
     }

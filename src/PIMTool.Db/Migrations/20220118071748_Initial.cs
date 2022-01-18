@@ -21,7 +21,7 @@ namespace PIMTool.Db.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "date", nullable: false),
-                    RowVersion = table.Column<int>(type: "int", rowVersion: true, nullable: false)
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,7 +36,7 @@ namespace PIMTool.Db.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LeaderId = table.Column<long>(type: "bigint", nullable: false),
-                    RowVersion = table.Column<int>(type: "int", rowVersion: true, nullable: false)
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,9 +63,8 @@ namespace PIMTool.Db.Migrations
                     Status = table.Column<string>(type: "char(3)", fixedLength: true, maxLength: 3, nullable: false),
                     StartDate = table.Column<DateTime>(type: "date", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: true),
-                    GroupdId = table.Column<long>(type: "bigint", nullable: false),
-                    GroupId = table.Column<long>(type: "bigint", nullable: true),
-                    RowVersion = table.Column<int>(type: "int", rowVersion: true, nullable: false)
+                    GroupId = table.Column<long>(type: "bigint", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,7 +75,7 @@ namespace PIMTool.Db.Migrations
                         principalSchema: "pimtool",
                         principalTable: "GROUP",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,22 +83,23 @@ namespace PIMTool.Db.Migrations
                 schema: "pimtool",
                 columns: table => new
                 {
-                    EmployeesId = table.Column<long>(type: "bigint", nullable: false),
-                    ProjectsId = table.Column<long>(type: "bigint", nullable: false)
+                    ProjectId = table.Column<long>(type: "bigint", nullable: false),
+                    EmployeeId = table.Column<long>(type: "bigint", nullable: false),
+                    JoinDate = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PROJECT_EMPLOYEE", x => new { x.EmployeesId, x.ProjectsId });
+                    table.PrimaryKey("PK_PROJECT_EMPLOYEE", x => new { x.ProjectId, x.EmployeeId });
                     table.ForeignKey(
-                        name: "FK_PROJECT_EMPLOYEE_EMPLOYEE_EmployeesId",
-                        column: x => x.EmployeesId,
+                        name: "FK_PROJECT_EMPLOYEE_EMPLOYEE_EmployeeId",
+                        column: x => x.EmployeeId,
                         principalSchema: "pimtool",
                         principalTable: "EMPLOYEE",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PROJECT_EMPLOYEE_PROJECT_ProjectsId",
-                        column: x => x.ProjectsId,
+                        name: "FK_PROJECT_EMPLOYEE_PROJECT_ProjectId",
+                        column: x => x.ProjectId,
                         principalSchema: "pimtool",
                         principalTable: "PROJECT",
                         principalColumn: "Id",
@@ -119,10 +119,10 @@ namespace PIMTool.Db.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PROJECT_EMPLOYEE_ProjectsId",
+                name: "IX_PROJECT_EMPLOYEE_EmployeeId",
                 schema: "pimtool",
                 table: "PROJECT_EMPLOYEE",
-                column: "ProjectsId");
+                column: "EmployeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

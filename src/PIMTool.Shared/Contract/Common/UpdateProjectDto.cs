@@ -8,6 +8,7 @@ namespace PIMTool.Shared.Contract.Common
 {
     public class UpdateProjectDto : NewProjectDto
     {
-        public int RowVersion { get; set; }
+        public long Id { get; set; }
+        public string RowVersion { get; set; }
     }
 }

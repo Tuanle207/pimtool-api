@@ -13,6 +13,6 @@ namespace PIMTool.Shared.Contract.Common
         public string Status { get; set; }
         public string Customer { get; set; }
         public DateTime StartDate { get; set; }
-        public int RowVersion { get; set; }
+        public string RowVersion { get; set; }
     }
 }

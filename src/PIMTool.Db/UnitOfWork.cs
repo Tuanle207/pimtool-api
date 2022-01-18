@@ -62,7 +62,7 @@ namespace PIMTool.Db
 
         public Task CompleteAsync()
         {
-            throw new NotImplementedException();
+            return _context.SaveChangesAsync();
         }
 
         protected virtual void Dispose(bool disposing)
